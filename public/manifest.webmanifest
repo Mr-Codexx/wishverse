@@ -1,0 +1,12 @@
+{
+  "name": "WishVerse",
+  "short_name": "WishVerse",
+  "description": "Create unforgettable experiences with WishVerse.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#070a1c",
+  "theme_color": "#070a1c",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any maskable" }
+  ]
+}

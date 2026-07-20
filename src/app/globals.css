@@ -1,0 +1,359 @@
+@import "tailwindcss";
+
+/* ============================================================
+   WishVerse — Design System
+   Multi-theme cosmic identity + pure "liquid glass" material.
+   Themes are switched via [data-theme] on <html>.
+   ============================================================ */
+
+@theme inline {
+  --color-bg: var(--wv-bg);
+  --color-bg-soft: var(--wv-bg-soft);
+  --color-surface: var(--wv-surface);
+  --color-fg: var(--wv-fg);
+  --color-muted: var(--wv-muted);
+  --color-primary: var(--wv-primary);
+  --color-primary-fg: var(--wv-primary-fg);
+  --color-accent: var(--wv-accent);
+  --color-violet: var(--wv-violet);
+  --color-border: var(--wv-border);
+  --color-ring: var(--wv-ring);
+  --color-success: var(--wv-success);
+  --color-danger: var(--wv-danger);
+  --color-warning: var(--wv-warning);
+
+  --font-display: var(--wv-font-display);
+  --font-sans: var(--wv-font-sans);
+
+  --radius-lg: 1rem;
+  --radius-xl: 1.25rem;
+  --radius-2xl: 1.5rem;
+  --radius-3xl: 2rem;
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-drift: drift 24s linear infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
+  --animate-blob: blob 18s ease-in-out infinite;
+}
+
+:root {
+  --wv-font-display: "Space Grotesk", "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+  --wv-font-sans: "Inter", "SF Pro Text", "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+/* ---------- NEBULA (dark, default) ---------- */
+[data-theme="nebula"] {
+  --wv-bg: #070a1c;
+  --wv-bg-soft: #0c1130;
+  --wv-surface: 255 255 255;              /* rgb tuple used with alpha */
+  --wv-fg: #eaf0ff;
+  --wv-muted: #9aa6d6;
+  --wv-primary: #6d8bff;
+  --wv-primary-fg: #06081a;
+  --wv-accent: #74e6ff;
+  --wv-violet: #9d7bff;
+  --wv-border: 255 255 255;
+  --wv-ring: #7ea2ff;
+  --wv-success: #4ade80;
+  --wv-danger: #ff6b81;
+  --wv-warning: #ffcf5c;
+
+  --glass-tint: 255 255 255;
+  --glass-alpha: 0.06;
+  --glass-border-alpha: 0.14;
+  --glass-blur: 22px;
+  --glow-1: #3a5bd0;
+  --glow-2: #7b4dd8;
+  --glow-3: #2ea6c8;
+  --star-color: 255 255 255;
+}
+
+/* ---------- COSMOS (dark violet, high contrast) ---------- */
+[data-theme="cosmos"] {
+  --wv-bg: #0a0518;
+  --wv-bg-soft: #150a30;
+  --wv-surface: 255 255 255;
+  --wv-fg: #f4ecff;
+  --wv-muted: #b39ee0;
+  --wv-primary: #b17bff;
+  --wv-primary-fg: #0a0518;
+  --wv-accent: #6ff0ff;
+  --wv-violet: #d08bff;
+  --wv-border: 255 255 255;
+  --wv-ring: #c79bff;
+  --wv-success: #46e6a3;
+  --wv-danger: #ff6f9d;
+  --wv-warning: #ffd166;
+
+  --glass-tint: 255 255 255;
+  --glass-alpha: 0.07;
+  --glass-border-alpha: 0.16;
+  --glass-blur: 26px;
+  --glow-1: #7b3ff2;
+  --glow-2: #b14dff;
+  --glow-3: #4d6bff;
+  --star-color: 255 255 255;
+}
+
+/* ---------- AURORA (light, starlit) ---------- */
+[data-theme="aurora"] {
+  --wv-bg: #eef1fb;
+  --wv-bg-soft: #e2e7fb;
+  --wv-surface: 255 255 255;
+  --wv-fg: #131a33;
+  --wv-muted: #56608c;
+  --wv-primary: #4c6bff;
+  --wv-primary-fg: #ffffff;
+  --wv-accent: #1fb6d8;
+  --wv-violet: #7b5cff;
+  --wv-border: 20 30 70;
+  --wv-ring: #4c6bff;
+  --wv-success: #17a673;
+  --wv-danger: #e5484d;
+  --wv-warning: #d99a12;
+
+  --glass-tint: 255 255 255;
+  --glass-alpha: 0.55;
+  --glass-border-alpha: 0.7;
+  --glass-blur: 20px;
+  --glow-1: #9db6ff;
+  --glow-2: #c3b0ff;
+  --glow-3: #9be3f0;
+  --star-color: 90 110 200;
+}
+
+* {
+  border-color: rgb(var(--wv-border) / 0.1);
+}
+
+html {
+  color-scheme: dark;
+}
+[data-theme="aurora"] html,
+html[data-theme="aurora"] {
+  color-scheme: light;
+}
+
+body {
+  background-color: var(--wv-bg);
+  color: var(--wv-fg);
+  font-family: var(--wv-font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--wv-primary);
+  color: var(--wv-primary-fg);
+}
+
+/* ============================================================
+   LIQUID GLASS — the signature material.
+   .glass          : frosted refracting surface
+   .glass-strong   : denser panel for cards
+   .liquid-sheen   : moving specular highlight
+   .droplet        : real water-drop lens element
+   ============================================================ */
+
+.glass {
+  position: relative;
+  background:
+    linear-gradient(
+      135deg,
+      rgb(var(--glass-tint) / calc(var(--glass-alpha) + 0.04)),
+      rgb(var(--glass-tint) / var(--glass-alpha))
+    );
+  backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(160%);
+  border: 1px solid rgb(var(--glass-tint) / var(--glass-border-alpha));
+  box-shadow:
+    inset 0 1px 0 0 rgb(var(--glass-tint) / 0.28),
+    inset 0 -1px 1px 0 rgb(0 0 0 / 0.25),
+    0 20px 60px -18px rgb(0 0 0 / 0.55);
+}
+
+.glass-strong {
+  background:
+    linear-gradient(
+      160deg,
+      rgb(var(--glass-tint) / calc(var(--glass-alpha) + 0.08)),
+      rgb(var(--glass-tint) / calc(var(--glass-alpha) + 0.01))
+    );
+  backdrop-filter: blur(calc(var(--glass-blur) + 8px)) saturate(180%);
+  -webkit-backdrop-filter: blur(calc(var(--glass-blur) + 8px)) saturate(180%);
+  border: 1px solid rgb(var(--glass-tint) / calc(var(--glass-border-alpha) + 0.04));
+  box-shadow:
+    inset 0 1px 0 0 rgb(var(--glass-tint) / 0.35),
+    inset 0 0 30px -10px rgb(var(--glass-tint) / 0.2),
+    inset 0 -2px 6px 0 rgb(0 0 0 / 0.28),
+    0 30px 80px -24px rgb(0 0 0 / 0.6);
+}
+
+/* specular top highlight that makes glass read as wet/liquid */
+.glass::before,
+.glass-strong::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1px;
+  background: linear-gradient(
+    130deg,
+    rgb(var(--glass-tint) / 0.5),
+    transparent 30%,
+    transparent 70%,
+    rgb(var(--glass-tint) / 0.18)
+  );
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
+
+.liquid-sheen {
+  position: relative;
+  overflow: hidden;
+}
+.liquid-sheen::after {
+  content: "";
+  position: absolute;
+  top: -60%;
+  left: -30%;
+  width: 60%;
+  height: 220%;
+  background: linear-gradient(
+    100deg,
+    transparent,
+    rgb(255 255 255 / 0.16),
+    transparent
+  );
+  transform: rotate(8deg);
+  animation: sheen 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+/* a genuine water droplet — refracting lens with rim light */
+.droplet {
+  border-radius: 50%;
+  background:
+    radial-gradient(
+      ellipse 60% 50% at 38% 30%,
+      rgb(255 255 255 / 0.9),
+      transparent 42%
+    ),
+    radial-gradient(
+      ellipse 120% 120% at 65% 78%,
+      rgb(var(--glow-2) / 0.55),
+      transparent 60%
+    ),
+    radial-gradient(
+      circle at 50% 50%,
+      rgb(var(--glass-tint) / 0.1),
+      rgb(var(--glass-tint) / 0.02)
+    );
+  backdrop-filter: blur(2px) brightness(1.15);
+  -webkit-backdrop-filter: blur(2px) brightness(1.15);
+  box-shadow:
+    inset 0 -6px 10px -4px rgb(0 0 0 / 0.35),
+    inset 0 4px 8px -2px rgb(255 255 255 / 0.6),
+    0 8px 22px -6px rgb(0 0 0 / 0.5);
+}
+
+.text-gradient {
+  background: linear-gradient(
+    120deg,
+    var(--wv-fg) 0%,
+    var(--wv-accent) 45%,
+    var(--wv-violet) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  background:
+    radial-gradient(60% 50% at 15% 10%, rgb(var(--glow-1-rgb, 0 0 0) / 0), transparent),
+    var(--wv-bg);
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.6;
+  mix-blend-mode: screen;
+  will-change: transform;
+}
+[data-theme="aurora"] .blob {
+  mix-blend-mode: multiply;
+  opacity: 0.35;
+}
+
+/* ---------- keyframes ---------- */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes drift {
+  from { transform: translate(0, 0); }
+  to { transform: translate(-40px, -30px); }
+}
+@keyframes sheen {
+  0% { left: -40%; }
+  55%, 100% { left: 130%; }
+}
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes blob {
+  0%, 100% { transform: translate(0px, 0px) scale(1); }
+  33% { transform: translate(40px, -30px) scale(1.1); }
+  66% { transform: translate(-30px, 20px) scale(0.95); }
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 1; }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg,
+    rgb(var(--glass-tint) / 0.04) 25%,
+    rgb(var(--glass-tint) / 0.12) 37%,
+    rgb(var(--glass-tint) / 0.04) 63%
+  );
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+}
+
+/* scrollbars */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgb(var(--glass-tint) / 0.14);
+  border-radius: 99px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--wv-ring);
+  outline-offset: 2px;
+}
