@@ -45,7 +45,7 @@ export function CompleteProfileForm() {
       await markOnboarded(user.uid, patch);
       patchProfile({ ...patch, onboarded: true });
       toast.success("Profile saved");
-      router.replace("/dashboard");
+      router.replace("/home");
     } catch (err) {
       toast.error("Couldn't save", friendlyAuthError(err));
       setSaving(false);

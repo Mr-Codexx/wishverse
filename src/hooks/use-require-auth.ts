@@ -29,7 +29,7 @@ export function useRequireAuth(options: Options = {}) {
       return;
     }
     if (requireAdmin && !auth.isAdmin) {
-      router.replace("/dashboard");
+      router.replace("/home");
       return;
     }
     if (requireVerified && !auth.isVerified) {

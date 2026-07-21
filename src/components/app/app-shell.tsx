@@ -10,12 +10,14 @@ import {
   Shield,
   LogOut,
   User,
+  Wand2,
 } from "lucide-react";
 
 import { LiquidBackground } from "@/components/brand/liquid-background";
 import { Logo } from "@/components/brand/logo";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { LoadingOverlay } from "@/components/auth/loading-overlay";
+import { AiCompanion } from "@/components/ai/ai-companion";
 import { useRequireAuth } from "@/hooks/use-require-auth";
 import { logout } from "@/lib/auth-actions";
 import { initials, cn } from "@/lib/utils";
@@ -23,6 +25,7 @@ import { initials, cn } from "@/lib/utils";
 const NAV = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/wishes", label: "Wishes", icon: Sparkles },
+  { href: "/dashboard/aura", label: "Aura AI", icon: Wand2 },
   { href: "/dashboard/settings", label: "Settings", icon: Settings },
 ];
 
@@ -48,9 +51,9 @@ export function AppShell({
     <div className="relative min-h-dvh">
       <LiquidBackground droplets={false} />
 
-      <div className="relative z-10 mx-auto flex min-h-dvh max-w-7xl">
+      <div className="relative z-10 flex min-h-dvh w-full">
         {/* sidebar */}
-        <aside className="glass sticky top-0 hidden h-dvh w-64 shrink-0 flex-col gap-2 rounded-r-3xl p-5 lg:flex">
+        <aside className="glass sticky top-0 hidden h-dvh w-64 shrink-0 flex-col gap-2 rounded-r-3xl p-5 xl:w-72 lg:flex">
           <div className="mb-6 px-2">
             <Logo size={34} />
           </div>
@@ -155,9 +158,11 @@ export function AppShell({
             </div>
           </header>
 
-          <main className="flex-1 p-5 sm:p-8">{children}</main>
+          <main className="flex-1 p-5 sm:p-8 xl:px-10">{children}</main>
         </div>
       </div>
+
+      <AiCompanion />
     </div>
   );
 }

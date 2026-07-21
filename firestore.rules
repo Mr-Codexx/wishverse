@@ -35,5 +35,42 @@ service cloud.firestore {
         && request.resource.data.uid == request.auth.uid;
       allow update, delete: if isAdmin();
     }
+
+    // Experiences (the core product)
+    match /experiences/{id} {
+      function isOwner() {
+        return isSignedIn() && resource.data.ownerUid == request.auth.uid;
+      }
+      function isSharedWith() {
+        return isSignedIn() && request.auth.uid in resource.data.sharedWith;
+      }
+
+      // Public + unlisted are readable by anyone (share links); private only by
+      // the owner or people it's explicitly shared with.
+      allow read: if resource.data.privacy == 'public'
+        || resource.data.privacy == 'unlisted'
+        || isOwner()
+        || isSharedWith()
+        || isAdmin();
+
+      // Only the authenticated owner can create their own experience.
+      allow create: if isSignedIn()
+        && request.resource.data.ownerUid == request.auth.uid;
+
+      // Owner may update/delete; admins too. Ownership can't be transferred.
+      allow update: if (isOwner() || isAdmin())
+        && request.resource.data.ownerUid == resource.data.ownerUid;
+      allow delete: if isOwner() || isAdmin();
+
+      // Guestbook — visitors of a viewable experience may sign it.
+      match /guestbook/{entryId} {
+        allow read: if true;
+        allow create: if request.resource.data.message is string
+          && request.resource.data.message.size() > 0
+          && request.resource.data.message.size() <= 500;
+        allow update: if false;
+        allow delete: if isAdmin();
+      }
+    }
   }
 }

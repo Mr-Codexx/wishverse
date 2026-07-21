@@ -92,7 +92,7 @@ export function OnboardingFlow() {
       });
       document.cookie = `wishverse_onboarded=1; Path=/; Max-Age=${60 * 60 * 24 * 7}; SameSite=Lax`;
       toast.success("You're all set", "Welcome to WishVerse.");
-      router.replace("/dashboard");
+      router.replace("/home");
     } catch (err) {
       toast.error("Couldn't save profile", friendlyAuthError(err));
       setSaving(false);

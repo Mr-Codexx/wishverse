@@ -4,6 +4,9 @@ const SESSION_COOKIE = "wishverse_session";
 
 const GUEST_ONLY = ["/login", "/register", "/forgot-password", "/reset-password"];
 const AUTH_REQUIRED = [
+  "/home",
+  "/experiences",
+  "/experience",
   "/dashboard",
   "/admin",
   "/onboarding",
@@ -23,7 +26,7 @@ export function middleware(req: NextRequest) {
   );
 
   if (hasSession && isGuestOnly) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+    return NextResponse.redirect(new URL("/home", req.url));
   }
 
   if (!hasSession && isAuthRequired) {
@@ -37,6 +40,9 @@ export function middleware(req: NextRequest) {
 
 export const config = {
   matcher: [
+    "/home",
+    "/experiences/:path*",
+    "/experience/:path*",
     "/dashboard/:path*",
     "/admin/:path*",
     "/onboarding",

@@ -42,7 +42,7 @@ export default function Home() {
         <div className="flex items-center gap-3">
           <ThemeToggle />
           <Button asChild variant="glass" size="sm">
-            <Link href={isAuthenticated ? "/dashboard" : "/login"}>
+            <Link href={isAuthenticated ? "/home" : "/login"}>
               {isAuthenticated ? "Dashboard" : "Sign in"}
             </Link>
           </Button>

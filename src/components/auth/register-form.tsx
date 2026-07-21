@@ -70,7 +70,7 @@ export function RegisterForm() {
     setGoogleLoading(true);
     try {
       const { isNew } = await loginWithGoogle();
-      router.replace(isNew ? "/onboarding" : "/dashboard");
+      router.replace(isNew ? "/onboarding" : "/home");
     } catch (err) {
       toast.error("Google sign-up failed", friendlyAuthError(err));
     } finally {

@@ -46,7 +46,7 @@ export function LoginForm() {
         values.remember,
       );
       toast.success("Welcome back", "You're signed in.");
-      router.replace(user.emailVerified ? "/dashboard" : "/verify-email");
+      router.replace(user.emailVerified ? "/home" : "/verify-email");
     } catch (err) {
       shake.start({ x: [0, -10, 10, -6, 6, 0], transition: { duration: 0.4 } });
       toast.error("Couldn't sign in", friendlyAuthError(err));
@@ -58,7 +58,7 @@ export function LoginForm() {
     try {
       const { isNew } = await loginWithGoogle();
       toast.success("Signed in", "Google account connected.");
-      router.replace(isNew ? "/onboarding" : "/dashboard");
+      router.replace(isNew ? "/onboarding" : "/home");
     } catch (err) {
       toast.error("Google sign-in failed", friendlyAuthError(err));
     } finally {
